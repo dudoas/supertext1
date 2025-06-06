@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Text Tools - Free Online Word Counter, Case Converter, Text Manipulators</title>
+    <meta name="description" content="Your comprehensive online toolkit for instant text manipulation, analysis, and transformation. Count words, change case, sort lines, find and replace, and more with our free tools.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1a202c; /* Equivalent to bg-gray-900 */
+            color: #e2e8f0; /* Equivalent to text-gray-100 */
+            margin: 0;
+            padding: 2rem 1rem; /* py-8 px-4 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box; /* Ensures padding doesn't increase total width/height */
+        }
+
+        /* Main content container */
+        .container {
+            width: 100%;
+            max-width: 1000px; /* max-w-5xl */
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem; /* space-y-8 */
+        }
+
+        /* Header styles */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 3rem; /* text-5xl */
+            font-weight: 800; /* font-extrabold */
+            margin-bottom: 1rem;
+            background-image: linear-gradient(to right, #8b5cf6, #6366f1); /* Purple to Indigo */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* drop-shadow-lg */
+        }
+
+        header p {
+            font-size: 1.25rem; /* text-xl */
+            color: #cbd5e0; /* text-gray-300 */
+            max-width: 800px; /* max-w-2xl */
+            margin: 0 auto;
+        }
+
+        /* Tool card styling */
+        .tool-card {
+            background-color: #1f2937; /* Darker gray */
+            border: 1px solid #374151; /* Border color */
+            border-radius: 0.75rem; /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl */
+            padding: 1.5rem; /* p-6 */
+        }
+
+        /* Tool card header */
+        .tool-card h2 {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 700; /* font-bold */
+            color: #93c5fd; /* text-indigo-300 */
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .tool-card h2 svg {
+            height: 2rem; /* h-8 */
+            width: 2rem; /* w-8 */
+            margin-right: 0.75rem; /* mr-3 */
+            color: #a78bfa; /* text-purple-400 */
+        }
+
+        /* Textarea styling */
+        textarea {
+            width: 100%;
+            height: 12rem; /* h-48 */
+            padding: 1rem; /* p-4 */
+            font-size: 1.125rem; /* text-lg */
+            border-radius: 0.5rem; /* rounded-lg */
+            background-color: #374151; /* Gray-700 */
+            color: #f3f4f6; /* Gray-100 */
+            border: 1px solid #4b5563; /* Gray-600 */
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            resize: vertical; /* resize-y */
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #6366f1; /* Indigo-500 */
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
+        }
+
+        /* Button group styling */
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem; /* gap-4 */
+            margin-top: 1.5rem; /* mt-6 */
+            justify-content: center; /* justify-center */
+        }
+
+        /* Individual button styling */
+        .btn-action, .btn-neutral {
+            padding: 0.625rem 1rem; /* py-2.5 px-4 */
+            border-radius: 0.5rem; /* rounded-md */
+            font-weight: 600; /* font-semibold */
+            transition: background-color 0.2s ease, transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem; /* text-sm */
+            min-width: 120px; /* Ensures buttons don't get too small */
+        }
+
+        .btn-action {
+            background-color: #4f46e5; /* Indigo-600 */
+            color: white;
+        }
+
+        .btn-action:hover {
+            background-color: #4338ca; /* Indigo-700 */
+            transform: translateY(-1px);
+        }
+
+        .btn-action:active {
+            transform: translateY(0);
+        }
+
+        .btn-neutral {
+            background-color: #4b5563; /* Gray-600 */
+            color: white;
+        }
+
+        .btn-neutral:hover {
+            background-color: #374151; /* Gray-700 */
+            transform: translateY(-1px);
+        }
+
+        .btn-neutral:active {
+            transform: translateY(0);
+        }
+
+        /* Copy feedback message */
+        .feedback-message {
+            color: #48bb78; /* green-400 */
+            font-weight: 600; /* font-semibold */
+            margin-left: 0.5rem; /* ml-2 */
+            transition: opacity 0.3s ease-out;
+            opacity: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feedback-message.hidden {
+            opacity: 0;
+            pointer-events: none; /* Allows clicks to pass through when hidden */
+        }
+
+        /* Stat box styling */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Responsive grid */
+            gap: 1rem; /* gap-4 */
+            text-align: center;
+        }
+
+        .stat-box {
+            background-color: #374151; /* Gray-700 */
+            border-radius: 0.5rem; /* rounded-md */
+            padding: 1rem;
+        }
+
+        .stat-box p:first-child {
+            color: #9ca3af; /* text-gray-400 */
+            font-size: 0.875rem; /* text-sm */
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-box p:last-child {
+            font-size: 2.25rem; /* text-3xl */
+            font-weight: 800; /* font-extrabold */
+        }
+
+        /* Specific stat box colors */
+        .stat-box:nth-child(1) p:last-child { color: #90cdf4; /* blue-300 */ }
+        .stat-box:nth-child(2) p:last-child { color: #81c784; /* green-300 */ }
+        .stat-box:nth-child(3) p:last-child { color: #ffd700; /* yellow-300 */ }
+        .stat-box:nth-child(4) p:last-child { color: #ef9a9a; /* red-300 */ }
+
+        /* Find and Replace inputs */
+        .input-field {
+            background-color: #374151;
+            color: #f3f4f6;
+            border: 1px solid #4b5563;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            width: 100%;
+            box-sizing: border-box; /* Include padding in total width */
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            color: #cbd5e0; /* text-gray-300 */
+            margin-top: 0.5rem;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            height: 1.25rem; /* h-5 */
+            width: 1.25rem; /* w-5 */
+            color: #6366f1; /* text-indigo-600 */
+            border-radius: 0.25rem; /* rounded */
+            margin-right: 0.5rem;
+            /* Basic styling for checkbox to look decent without full framework styles */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-color: #4b5563;
+            border: 1px solid #6b7280;
+            cursor: pointer;
+            position: relative;
+        }
+        .checkbox-label input[type="checkbox"]:checked {
+            background-color: #6366f1;
+            border-color: #6366f1;
+        }
+        .checkbox-label input[type="checkbox"]:checked::after {
+            content: '✔';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 0.75rem;
+        }
+        .checkbox-label input[type="checkbox"]:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
+        }
+
+
+        /* Footer styles */
+        footer {
+            text-align: center;
+            margin-top: 3rem; /* mt-12 */
+            color: #9ca3af; /* text-gray-400 */
+            font-size: 0.875rem; /* text-sm */
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 640px) { /* sm breakpoint */
+            .tool-card {
+                padding: 2rem; /* p-8 */
+            }
+            .tool-card h2 {
+                font-size: 2rem; /* text-3xl */
+            }
+            header h1 {
+                font-size: 4rem; /* md:text-6xl */
+            }
+            header p {
+                font-size: 1.5rem; /* md:text-2xl */
+            }
+            .button-group {
+                justify-content: flex-start; /* sm:justify-start */
+            }
+            .btn-action, .btn-neutral {
+                font-size: 1rem; /* sm:text-base */
+            }
+            .stat-grid {
+                grid-template-columns: repeat(2, 1fr); /* sm:grid-cols-2 */
+            }
+        }
+
+        @media (min-width: 768px) { /* md breakpoint */
+             .tool-card {
+                padding: 2rem; /* p-8 */
+            }
+            .tool-card h2 {
+                font-size: 2rem; /* md:text-3xl */
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .stat-grid {
+                grid-template-columns: repeat(4, 1fr); /* lg:grid-cols-4 */
+            }
+            .tool-card h2 {
+                font-size: 2.25rem; /* Increased slightly for desktop */
+            }
+            .btn-action, .btn-neutral {
+                min-width: unset; /* Remove min-width on larger screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <h1>Super Text Tools</h1>
+            <p>Your comprehensive online toolkit for instant text manipulation, analysis, and transformation.</p>
+        </header>
+
+        <!-- Main Text Input Area -->
+        <section class="tool-card">
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+                Your Text Here
+            </h2>
+            <textarea id="text-input" placeholder="Paste or type your text here..."></textarea>
+
+            <!-- Action Buttons for Main Input -->
+            <div class="button-group">
+                <button id="clear-all-btn" class="btn-neutral">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="h-5 w-5 mr-1">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    Clear All
+                </button>
+                <button id="copy-input-btn" class="btn-action">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="h-5 w-5 mr-1">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7v.01M12 7v.01M16 7v.01M9 13.25V15h2V13.25A1.75 1.75 0 0010.25 11.5h-.5A1.75 1.75 0 008 13.25zM15 13.25V15h2V13.25A1.75 1.75 0 0016.25 11.5h-.5A1.75 1.75 0 0014 13.25z" />
+                    </svg>
+                    Copy Input
+                </button>
+                <span id="copy-feedback" class="feedback-message hidden">Copied!</span>
+            </div>
+        </section>
+
+        <!-- Text Counters Section -->
+        <section class="tool-card">
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 14L20 3M17 17l-3 3M11 11l-3 3M14 9l3 3M7 7l3 3m10 4V3M7 7V3m10 4h-4" />
+                </svg>
+                Text Counters
+            </h2>
+            <div class="stat-grid">
+                <div class="stat-box">
+                    <p>Words</p>
+                    <p id="word-count">0</p>
+                </div>
+                <div class="stat-box">
+                    <p>Characters (incl. spaces)</p>
+                    <p id="char-count">0</p>
+                </div>
+                <div class="stat-box">
+                    <p>Characters (no spaces)</p>
+                    <p id="char-no-space-count">0</p>
+                </div>
+                <div class="stat-box">
+                    <p>Lines</p>
+                    <p id="line-count">0</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Case Converter Section -->
+        <section class="tool-card">
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354c.334-.334.668-.334 1 0l6.536 6.536c.334.334.334.668 0 1l-6.536 6.536c-.334.334-.668.334-1 0L5.464 12.354c-.334-.334-.334-.668 0-1L12 4.354z" />
+                </svg>
+                Case Converters
+            </h2>
+            <div class="button-group">
+                <button id="uppercase-btn" class="btn-action">UPPERCASE</button>
+                <button id="lowercase-btn" class="btn-action">lowercase</button>
+                <button id="titlecase-btn" class="btn-action">Title Case</button>
+                <button id="sentencecase-btn" class="btn-action">Sentence case</button>
+                <button id="alternatingcase-btn" class="btn-action">AlTeRnAtInG cAsE</button>
+                <button id="kebabcase-btn" class="btn-action">kebab-case</button>
+                <button id="snakecase-btn" class="btn-action">snake_case</button>
+            </div>
+        </section>
+
+        <!-- Text Manipulators Section -->
+        <section class="tool-card">
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+                Text Manipulators
+            </h2>
+            <div class="button-group">
+                <button id="remove-whitespace-btn" class="btn-action">Remove Extra Whitespace</button>
+                <button id="sort-az-btn" class="btn-action">Sort Lines (A-Z)</button>
+                <button id="sort-za-btn" class="btn-action">Sort Lines (Z-A)</button>
+                <button id="reverse-text-btn" class="btn-action">Reverse Entire Text</button>
+                <button id="reverse-words-btn" class="btn-action">Reverse Words</button>
+                <button id="remove-duplicate-lines-btn" class="btn-action">Remove Duplicate Lines</button>
+            </div>
+        </section>
+
+        <!-- Text Analyzers Section -->
+        <section class="tool-card">
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13m-6 0v2m0-2h2a2 2 0 002-2V9a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 002 2zm8-12V4.721c0-.42-.262-.801-.655-.935L7.96 1.155a1.532 1.532 0 00-1.895.845L4.015 7.643a1.532 1.532 0 00.845 1.895L7.96 10.935a1.532 1.532 0 001.895-.845l2.05-5.643z" />
+                </svg>
+                Text Analyzers
+            </h2>
+            <div class="button-group">
+                <button id="char-freq-btn" class="btn-action">Character Frequency</button>
+                <button id="word-freq-btn" class="btn-action">Word Frequency</button>
+            </div>
+        </section>
+
+        <!-- Find and Replace Section -->
+        <section class="tool-card">
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                Find and Replace
+            </h2>
+            <div class="flex flex-col gap-4 mb-4">
+                <input type="text" id="find-text-input" class="input-field" placeholder="Find this text...">
+                <input type="text" id="replace-text-input" class="input-field" placeholder="Replace with this text...">
+                <label for="match-case-checkbox" class="checkbox-label">
+                    <input type="checkbox" id="match-case-checkbox">
+                    <span>Match case</span>
+                </label>
+                <button id="find-replace-btn" class="btn-action w-full">Perform Find & Replace</button>
+            </div>
+        </section>
+
+        <!-- Encoding/Decoding Section -->
+        <section class="tool-card">
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7v.01M12 7v.01M16 7v.01M9 13.25V15h2V13.25A1.75 1.75 0 0010.25 11.5h-.5A1.75 1.75 0 008 13.25zM15 13.25V15h2V13.25A1.75 1.75 0 0016.25 11.5h-.5A1.75 1.75 0 0014 13.25z" />
+                </svg>
+                Encoding / Decoding
+            </h2>
+            <div class="button-group">
+                <button id="url-encode-btn" class="btn-action">URL Encode</button>
+                <button id="url-decode-btn" class="btn-action">URL Decode</button>
+            </div>
+        </section>
+
+        <!-- Output Area (for frequency, find/replace results) -->
+        <section class="tool-card" id="output-section" style="display: none;">
+            <h2>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M12 16h.01" />
+                </svg>
+                Result Output
+            </h2>
+            <textarea id="text-output" readonly placeholder="Results will appear here..."></textarea>
+            <button id="copy-output-btn" class="btn-action mt-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="h-5 w-5 mr-1">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7v.01M12 7v.01M16 7v.01M9 13.25V15h2V13.25A1.75 1.75 0 0010.25 11.5h-.5A1.75 1.75 0 008 13.25zM15 13.25V15h2V13.25A1.75 1.75 0 0016.25 11.5h-.5A1.75 1.75 0 0014 13.25z" />
+                </svg>
+                Copy Output
+            </button>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; <span id="current-year"></span> Super Text Tools. All rights reserved.</p>
+            <p>Built with HTML, CSS, and Vanilla JavaScript.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Get DOM elements
+        const textInput = document.getElementById('text-input');
+        const textOutput = document.getElementById('text-output');
+        const outputSection = document.getElementById('output-section');
+
+        const wordCount = document.getElementById('word-count');
+        const charCount = document.getElementById('char-count');
+        const charNoSpaceCount = document.getElementById('char-no-space-count');
+        const lineCount = document.getElementById('line-count');
+
+        const uppercaseBtn = document.getElementById('uppercase-btn');
+        const lowercaseBtn = document.getElementById('lowercase-btn');
+        const titlecaseBtn = document.getElementById('titlecase-btn');
+        const sentencecaseBtn = document.getElementById('sentencecase-btn');
+        const alternatingcaseBtn = document.getElementById('alternatingcase-btn');
+        const kebabcaseBtn = document.getElementById('kebabcase-btn');
+        const snakecaseBtn = document.getElementById('snakecase-btn');
+
+        const removeWhitespaceBtn = document.getElementById('remove-whitespace-btn');
+        const sortAzBtn = document.getElementById('sort-az-btn');
+        const sortZaBtn = document.getElementById('sort-za-btn');
+        const reverseTextBtn = document.getElementById('reverse-text-btn');
+        const reverseWordsBtn = document.getElementById('reverse-words-btn');
+        const removeDuplicateLinesBtn = document.getElementById('remove-duplicate-lines-btn');
+
+        const charFreqBtn = document.getElementById('char-freq-btn');
+        const wordFreqBtn = document.getElementById('word-freq-btn');
+
+        const findTextInput = document.getElementById('find-text-input');
+        const replaceTextInput = document.getElementById('replace-text-input');
+        const matchCaseCheckbox = document.getElementById('match-case-checkbox');
+        const findReplaceBtn = document.getElementById('find-replace-btn');
+
+        const urlEncodeBtn = document.getElementById('url-encode-btn');
+        const urlDecodeBtn = document.getElementById('url-decode-btn');
+
+        const clearAllBtn = document.getElementById('clear-all-btn');
+        const copyInputBtn = document.getElementById('copy-input-btn');
+        const copyOutputBtn = document.getElementById('copy-output-btn');
+        const copyFeedback = document.getElementById('copy-feedback');
+
+        // --- Utility Functions ---
+
+        /**
+         * Displays a "Copied!" message for a short duration.
+         */
+        function showCopyMessage() {
+            copyFeedback.classList.remove('hidden');
+            setTimeout(() => {
+                copyFeedback.classList.add('hidden');
+            }, 1500);
+        }
+
+        /**
+         * Copies text from a given textarea element to the clipboard.
+         * @param {HTMLElement} element - The textarea element to copy from.
+         */
+        function copyTextToClipboard(element) {
+            if (element && element.value) {
+                element.select();
+                // For broader compatibility in iframes, use document.execCommand('copy')
+                document.execCommand('copy');
+                showCopyMessage();
+            }
+        }
+
+        /**
+         * Updates all counter displays based on the current text input.
+         */
+        function updateCounts() {
+            const text = textInput.value;
+            wordCount.textContent = text.trim().split(/\s+/).filter(word => word.length > 0).length;
+            charCount.textContent = text.length;
+            charNoSpaceCount.textContent = text.replace(/\s/g, '').length;
+            lineCount.textContent = text.trim() === '' ? 0 : text.split(/\r\n|\r|\n/).length;
+
+            // Hide output section if main input is empty
+            if (text.trim() === '') {
+                outputSection.style.display = 'none';
+                textOutput.value = ''; // Clear output as well
+            }
+        }
+
+        /**
+         * Clears all inputs and outputs.
+         */
+        function clearAll() {
+            textInput.value = '';
+            textOutput.value = '';
+            findTextInput.value = '';
+            replaceTextInput.value = '';
+            matchCaseCheckbox.checked = false;
+            outputSection.style.display = 'none'; // Hide output section
+            updateCounts(); // Reset counters to 0
+            textInput.focus();
+        }
+
+        // --- Core Text Tool Functions ---
+
+        function toUpperCase() {
+            textInput.value = textInput.value.toUpperCase();
+            updateCounts();
+        }
+
+        function toLowerCase() {
+            textInput.value = textInput.value.toLowerCase();
+            updateCounts();
+        }
+
+        function toTitleCase() {
+            if (!textInput.value) return;
+            textInput.value = textInput.value.replace(/\w\S*/g, (txt) => {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            });
+            updateCounts();
+        }
+
+        function toSentenceCase() {
+            if (!textInput.value) return;
+            textInput.value = textInput.value.replace(/(^\s*\w|[.!?]\s*\w)/g, (c) => c.toUpperCase());
+            updateCounts();
+        }
+
+        function toAlternatingCase() {
+            if (!textInput.value) return;
+            let result = '';
+            for (let i = 0; i < textInput.value.length; i++) {
+                result += (i % 2 === 0) ? textInput.value[i].toLowerCase() : textInput.value[i].toUpperCase();
+            }
+            textInput.value = result;
+            updateCounts();
+        }
+
+        function toReverseWords() {
+            if (!textInput.value) return;
+            textInput.value = textInput.value.split(/\s+/).map(word => word.split('').reverse().join('')).join(' ');
+            updateCounts();
+        }
+
+        function toKebabCase() {
+            if (!textInput.value) return;
+            textInput.value = textInput.value.toLowerCase()
+                                            .replace(/\s+/g, '-') /* Replace spaces with hyphens */
+                                            .replace(/[^a-z0-9-]/g, ''); /* Remove non-alphanumeric except hyphens */
+            updateCounts();
+        }
+
+        function toSnakeCase() {
+            if (!textInput.value) return;
+            textInput.value = textInput.value.toLowerCase()
+                                            .replace(/\s+/g, '_') /* Replace spaces with underscores */
+                                            .replace(/[^a-z0-9_]/g, ''); /* Remove non-alphanumeric except underscores */
+            updateCounts();
+        }
+
+        function removeExtraWhitespace() {
+            if (!textInput.value) return;
+            textInput.value = textInput.value.replace(/\s\s+/g, ' ').trim();
+            updateCounts();
+        }
+
+        function sortLinesAlphabetical() {
+            if (!textInput.value) return;
+            const lines = textInput.value.split(/\r\n|\r|\n/);
+            textInput.value = lines.sort().join('\n');
+            updateCounts();
+        }
+
+        function sortLinesReverseAlphabetical() {
+            if (!textInput.value) return;
+            const lines = textInput.value.split(/\r\n|\r|\n/);
+            textInput.value = lines.sort().reverse().join('\n');
+            updateCounts();
+        }
+
+        function reverseText() {
+            if (!textInput.value) return;
+            textInput.value = textInput.value.split('').reverse().join('');
+            updateCounts();
+        }
+
+        function showCharacterFrequency() {
+            if (!textInput.value) {
+                textOutput.value = 'Enter text to analyze character frequency.';
+                outputSection.style.display = 'block';
+                return;
+            }
+            const charFreq = {};
+            for (const char of textInput.value) {
+                charFreq[char] = (charFreq[char] || 0) + 1;
+            }
+            const sortedFreq = Object.entries(charFreq).sort(([, a], [, b]) => b - a);
+            let output = 'Character Frequency:\n';
+            for (const [char, count] of sortedFreq) {
+                output += `"${char}": ${count}\n`;
+            }
+            textOutput.value = output;
+            outputSection.style.display = 'block';
+        }
+
+        function showWordFrequency() {
+            if (!textInput.value) {
+                textOutput.value = 'Enter text to analyze word frequency.';
+                outputSection.style.display = 'block';
+                return;
+            }
+            const words = textInput.value.toLowerCase().match(/\b\w+\b/g) || [];
+            const wordFreq = {};
+            for (const word of words) {
+                wordFreq[word] = (wordFreq[word] || 0) + 1;
+            }
+            const sortedFreq = Object.entries(wordFreq).sort(([, a], [, b]) => b - a);
+            let output = 'Word Frequency:\n';
+            for (const [word, count] of sortedFreq) {
+                output += `"${word}": ${count}\n`;
+            }
+            textOutput.value = output;
+            outputSection.style.display = 'block';
+        }
+
+        function removeDuplicateLines() {
+            if (!textInput.value) return;
+            const lines = textInput.value.split(/\r\n|\r|\n/);
+            const uniqueLines = Array.from(new Set(lines.map(line => line.trim()))).filter(line => line !== ''); // Trim and filter empty
+            textInput.value = uniqueLines.join('\n');
+            updateCounts();
+        }
+
+        function handleFindReplace() {
+            const originalText = textInput.value;
+            const find = findTextInput.value;
+            const replace = replaceTextInput.value;
+            const matchCase = matchCaseCheckbox.checked;
+
+            if (!originalText) {
+                textOutput.value = 'Please enter text in the main input area.';
+                outputSection.style.display = 'block';
+                return;
+            }
+            if (!find) {
+                textOutput.value = 'Please enter text to find.';
+                outputSection.style.display = 'block';
+                return;
+            }
+
+            let replacedText;
+            if (matchCase) {
+                // Case-sensitive replacement
+                replacedText = originalText.split(find).join(replace);
+            } else {
+                // Case-insensitive replacement using regex with 'gi' flags
+                // Escape special characters in 'find' string for regex
+                const escapedFind = find.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const regex = new RegExp(escapedFind, 'gi');
+                replacedText = originalText.replace(regex, replace);
+            }
+            textOutput.value = replacedText;
+            outputSection.style.display = 'block';
+        }
+
+        function urlEncode() {
+            if (!textInput.value) return;
+            textInput.value = encodeURIComponent(textInput.value);
+            updateCounts();
+        }
+
+        function urlDecode() {
+            if (!textInput.value) return;
+            try {
+                textInput.value = decodeURIComponent(textInput.value);
+            } catch (e) {
+                textInput.value = "Error: Invalid URL encoding. " + textInput.value;
+            }
+            updateCounts();
+        }
+
+        // --- Event Listeners ---
+        window.onload = function() {
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Initial count update and focus
+            updateCounts();
+            textInput.focus();
+
+            // Main input events
+            textInput.addEventListener('input', updateCounts);
+
+            // Action buttons
+            clearAllBtn.addEventListener('click', clearAll);
+            copyInputBtn.addEventListener('click', () => copyTextToClipboard(textInput));
+            copyOutputBtn.addEventListener('click', () => copyTextToClipboard(textOutput));
+
+            // Case Converter buttons
+            uppercaseBtn.addEventListener('click', toUpperCase);
+            lowercaseBtn.addEventListener('click', toLowerCase);
+            titlecaseBtn.addEventListener('click', toTitleCase);
+            sentencecaseBtn.addEventListener('click', toSentenceCase);
+            alternatingcaseBtn.addEventListener('click', toAlternatingCase);
+            kebabcaseBtn.addEventListener('click', toKebabCase);
+            snakecaseBtn.addEventListener('click', toSnakeCase);
+
+            // Text Manipulator buttons
+            removeWhitespaceBtn.addEventListener('click', removeExtraWhitespace);
+            sortAzBtn.addEventListener('click', sortLinesAlphabetical);
+            sortZaBtn.addEventListener('click', sortLinesReverseAlphabetical);
+            reverseTextBtn.addEventListener('click', reverseText);
+            reverseWordsBtn.addEventListener('click', toReverseWords);
+            removeDuplicateLinesBtn.addEventListener('click', removeDuplicateLines);
+
+            // Text Analyzer buttons
+            charFreqBtn.addEventListener('click', showCharacterFrequency);
+            wordFreqBtn.addEventListener('click', showWordFrequency);
+
+            // Find and Replace
+            findReplaceBtn.addEventListener('click', handleFindReplace);
+
+            // Encoding/Decoding
+            urlEncodeBtn.addEventListener('click', urlEncode);
+            urlDecodeBtn.addEventListener('click', urlDecode);
+        };
+
+    </script>
+</body>
+</html>
