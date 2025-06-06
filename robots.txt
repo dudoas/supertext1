@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://supertexttools.netlify.app/sitemap.xml
