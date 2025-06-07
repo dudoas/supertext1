@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" itemscope itemtype="http://schema.org/WebSite">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Text Tools - Free Online Word Counter, Case Converter, Text Manipulators</title>
-    <meta name="description" content="Your comprehensive online toolkit for instant text manipulation, analysis, and transformation. Count words, change case, sort lines, find and replace, and more with our free tools.">
+    <title itemprop="name">Super Text Tools - Free Online Word Counter, Case Converter, Text Manipulators</title>
+    <!-- Enhanced Meta Description for better SEO and click-through rates -->
+    <meta name="description" itemprop="description" content="Super Text Tools offers free online tools for text manipulation and analysis. Easily count words, characters, and lines, convert text case (uppercase, lowercase, title case), sort text, reverse words, remove duplicates, find & replace, and more. Your ultimate text toolkit for writers, developers, and data entry.">
+    <!-- Meta Keywords (less impactful for ranking but can provide context) -->
+    <meta name="keywords" content="text tools, online text tools, word counter, character counter, case converter, uppercase, lowercase, title case, sentence case, text manipulation, sort lines, reverse text, find and replace, text analysis, URL encode, URL decode, free text tools">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Favicon - This is the logo for the browser tab/taskbar -->
     <!-- Updated to use the specific PNG file directly from the repository root -->
     <link rel="icon" type="image/png" href="/Gemini_Generated_Image_frr30xfrr30xfrr3.png">
-    <!-- Removed redundant favicon links and optional sizes for simplicity as per request -->
 
 
     <style>
@@ -281,6 +284,32 @@
             box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
         }
 
+        /* New styles for inline output areas */
+        .output-result-container {
+            background-color: #2d3748; /* Darker gray for output background */
+            border: 1px solid #4a5568; /* Slightly lighter border */
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1.5rem; /* space above the output area */
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); /* Subtle inner shadow */
+        }
+
+        .output-result-container label {
+            color: #cbd5e0; /* light gray for labels */
+        }
+
+        .output-textarea {
+            width: 100%;
+            height: 8rem; /* Smaller height for specific outputs */
+            padding: 0.75rem;
+            font-size: 0.95rem; /* slightly smaller font */
+            border-radius: 0.4rem;
+            background-color: #1a202c; /* Even darker for textarea */
+            color: #f3f4f6;
+            border: 1px solid #4b5563;
+            resize: vertical;
+        }
+
 
         /* Footer styles */
         footer {
@@ -341,7 +370,7 @@
     <div class="container">
         <!-- Header Section -->
         <header>
-            <a href="/" class="header-logo-title-container">
+            <a href="/" class="header-logo-title-container" itemprop="url">
                 <!-- No image here, as requested -->
                 <h1>Super Text Tools</h1>
             </a>
@@ -453,6 +482,18 @@
                 <button id="char-freq-btn" class="btn-action">Character Frequency</button>
                 <button id="word-freq-btn" class="btn-action">Word Frequency</button>
             </div>
+            <!-- Output area for Character Frequency -->
+            <div id="char-freq-output-area" class="output-result-container" style="display: none;">
+                <label for="char-freq-output" class="block text-gray-300 text-sm font-semibold mt-4 mb-2">Character Frequency Results:</label>
+                <textarea id="char-freq-output" class="output-textarea" readonly></textarea>
+                <button class="btn-action mt-2 copy-specific-output-btn" data-target="char-freq-output">Copy Results</button>
+            </div>
+            <!-- Output area for Word Frequency -->
+            <div id="word-freq-output-area" class="output-result-container" style="display: none;">
+                <label for="word-freq-output" class="block text-gray-300 text-sm font-semibold mt-4 mb-2">Word Frequency Results:</label>
+                <textarea id="word-freq-output" class="output-textarea" readonly></textarea>
+                <button class="btn-action mt-2 copy-specific-output-btn" data-target="word-freq-output">Copy Results</button>
+            </div>
         </section>
 
         <!-- Find and Replace Section -->
@@ -472,6 +513,12 @@
                 </label>
                 <button id="find-replace-btn" class="btn-action w-full">Perform Find & Replace</button>
             </div>
+            <!-- Output area for Find and Replace -->
+            <div id="find-replace-output-area" class="output-result-container" style="display: none;">
+                <label for="find-replace-output" class="block text-gray-300 text-sm font-semibold mt-4 mb-2">Find & Replace Results:</label>
+                <textarea id="find-replace-output" class="output-textarea" readonly></textarea>
+                <button class="btn-action mt-2 copy-specific-output-btn" data-target="find-replace-output">Copy Results</button>
+            </div>
         </section>
 
         <!-- Encoding/Decoding Section -->
@@ -486,23 +533,12 @@
                 <button id="url-encode-btn" class="btn-action">URL Encode</button>
                 <button id="url-decode-btn" class="btn-action">URL Decode</button>
             </div>
-        </section>
-
-        <!-- Output Area (for frequency, find/replace results) -->
-        <section class="tool-card" id="output-section" style="display: none;">
-            <h2>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M12 16h.01" />
-                </svg>
-                Result Output
-            </h2>
-            <textarea id="text-output" readonly placeholder="Results will appear here..."></textarea>
-            <button id="copy-output-btn" class="btn-action mt-4">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="h-5 w-5 mr-1">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 7v.01M12 7v.01M16 7v.01M9 13.25V15h2V13.25A1.75 1.75 0 0010.25 11.5h-.5A1.75 1.75 0 008 13.25zM15 13.25V15h2V13.25A1.75 1.75 0 0016.25 11.5h-.5A1.75 1.75 0 0014 13.25z" />
-                </svg>
-                Copy Output
-            </button>
+            <!-- Output area for Encoding/Decoding -->
+            <div id="encoding-output-area" class="output-result-container" style="display: none;">
+                <label for="encoding-output" class="block text-gray-300 text-sm font-semibold mt-4 mb-2">Encoding/Decoding Results:</label>
+                <textarea id="encoding-output" class="output-textarea" readonly></textarea>
+                <button class="btn-action mt-2 copy-specific-output-btn" data-target="encoding-output">Copy Results</button>
+            </div>
         </section>
 
         <!-- Footer -->
@@ -515,8 +551,9 @@
     <script>
         // Get DOM elements
         const textInput = document.getElementById('text-input');
-        const textOutput = document.getElementById('text-output');
-        const outputSection = document.getElementById('output-section');
+        // Removed global textOutput and outputSection
+        // const textOutput = document.getElementById('text-output');
+        // const outputSection = document.getElementById('output-section');
 
         const wordCount = document.getElementById('word-count');
         const charCount = document.getElementById('char-count');
@@ -540,18 +577,28 @@
 
         const charFreqBtn = document.getElementById('char-freq-btn');
         const wordFreqBtn = document.getElementById('word-freq-btn');
+        const charFreqOutputArea = document.getElementById('char-freq-output-area'); // New output area
+        const charFreqOutput = document.getElementById('char-freq-output');           // New output textarea
+        const wordFreqOutputArea = document.getElementById('word-freq-output-area'); // New output area
+        const wordFreqOutput = document.getElementById('word-freq-output');           // New output textarea
+
 
         const findTextInput = document.getElementById('find-text-input');
         const replaceTextInput = document.getElementById('replace-text-input');
         const matchCaseCheckbox = document.getElementById('match-case-checkbox');
         const findReplaceBtn = document.getElementById('find-replace-btn');
+        const findReplaceOutputArea = document.getElementById('find-replace-output-area'); // New output area
+        const findReplaceOutput = document.getElementById('find-replace-output');           // New output textarea
 
         const urlEncodeBtn = document.getElementById('url-encode-btn');
         const urlDecodeBtn = document.getElementById('url-decode-btn');
+        const encodingOutputArea = document.getElementById('encoding-output-area'); // Consolidated for encode/decode
+        const encodingOutput = document.getElementById('encoding-output');         // Consolidated for encode/decode
+
 
         const clearAllBtn = document.getElementById('clear-all-btn');
         const copyInputBtn = document.getElementById('copy-input-btn');
-        const copyOutputBtn = document.getElementById('copy-output-btn');
+        // const copyOutputBtn = document.getElementById('copy-output-btn'); // Removed global copy button
         const copyFeedback = document.getElementById('copy-feedback');
 
         // --- Utility Functions ---
@@ -559,25 +606,40 @@
         /**
          * Displays a "Copied!" message for a short duration.
          */
-        function showCopyMessage() {
-            copyFeedback.classList.remove('hidden');
+        function showCopyMessage(buttonElement) {
+            const originalText = buttonElement.textContent;
+            buttonElement.textContent = 'Copied!';
+            // You might want to add a temporary class for visual feedback, e.g., buttonElement.classList.add('bg-green-600');
             setTimeout(() => {
-                copyFeedback.classList.add('hidden');
+                buttonElement.textContent = originalText;
+                // buttonElement.classList.remove('bg-green-600');
             }, 1500);
         }
 
         /**
          * Copies text from a given textarea element to the clipboard.
          * @param {HTMLElement} element - The textarea element to copy from.
+         * @param {HTMLElement} buttonElement - The button element that triggered the copy.
          */
-        function copyTextToClipboard(element) {
+        function copyTextToClipboard(element, buttonElement) {
             if (element && element.value) {
                 element.select();
                 // For broader compatibility in iframes, use document.execCommand('copy')
                 document.execCommand('copy');
-                showCopyMessage();
+                showCopyMessage(buttonElement);
             }
         }
+        
+        /**
+         * Hides all specific output areas.
+         */
+        function hideAllOutputAreas() {
+            charFreqOutputArea.style.display = 'none';
+            wordFreqOutputArea.style.display = 'none';
+            findReplaceOutputArea.style.display = 'none';
+            encodingOutputArea.style.display = 'none';
+        }
+
 
         /**
          * Updates all counter displays based on the current text input.
@@ -589,10 +651,9 @@
             charNoSpaceCount.textContent = text.replace(/\s/g, '').length;
             lineCount.textContent = text.trim() === '' ? 0 : text.split(/\r\n|\r|\n/).length;
 
-            // Hide output section if main input is empty
+            // Hide all output sections if main input is empty
             if (text.trim() === '') {
-                outputSection.style.display = 'none';
-                textOutput.value = ''; // Clear output as well
+                hideAllOutputAreas();
             }
         }
 
@@ -601,11 +662,11 @@
          */
         function clearAll() {
             textInput.value = '';
-            textOutput.value = '';
+            // Removed global textOutput.value = '';
             findTextInput.value = '';
             replaceTextInput.value = '';
             matchCaseCheckbox.checked = false;
-            outputSection.style.display = 'none'; // Hide output section
+            hideAllOutputAreas(); // Hide all specific output areas
             updateCounts(); // Reset counters to 0
             textInput.focus();
         }
@@ -615,11 +676,13 @@
         function toUpperCase() {
             textInput.value = textInput.value.toUpperCase();
             updateCounts();
+            hideAllOutputAreas(); // Hide any specific results after general text modification
         }
 
         function toLowerCase() {
             textInput.value = textInput.value.toLowerCase();
             updateCounts();
+            hideAllOutputAreas();
         }
 
         function toTitleCase() {
@@ -628,12 +691,14 @@
                 return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
             });
             updateCounts();
+            hideAllOutputAreas();
         }
 
         function toSentenceCase() {
             if (!textInput.value) return;
             textInput.value = textInput.value.replace(/(^\s*\w|[.!?]\s*\w)/g, (c) => c.toUpperCase());
             updateCounts();
+            hideAllOutputAreas();
         }
 
         function toAlternatingCase() {
@@ -644,12 +709,14 @@
             }
             textInput.value = result;
             updateCounts();
+            hideAllOutputAreas();
         }
 
         function toReverseWords() {
             if (!textInput.value) return;
             textInput.value = textInput.value.split(/\s+/).map(word => word.split('').reverse().join('')).join(' ');
             updateCounts();
+            hideAllOutputAreas();
         }
 
         function toKebabCase() {
@@ -658,6 +725,7 @@
                                             .replace(/\s+/g, '-') /* Replace spaces with hyphens */
                                             .replace(/[^a-z0-9-]/g, ''); /* Remove non-alphanumeric except hyphens */
             updateCounts();
+            hideAllOutputAreas();
         }
 
         function toSnakeCase() {
@@ -666,12 +734,14 @@
                                             .replace(/\s+/g, '_') /* Replace spaces with underscores */
                                             .replace(/[^a-z0-9_]/g, ''); /* Remove non-alphanumeric except underscores */
             updateCounts();
+            hideAllOutputAreas();
         }
 
         function removeExtraWhitespace() {
             if (!textInput.value) return;
             textInput.value = textInput.value.replace(/\s\s+/g, ' ').trim();
             updateCounts();
+            hideAllOutputAreas();
         }
 
         function sortLinesAlphabetical() {
@@ -679,6 +749,7 @@
             const lines = textInput.value.split(/\r\n|\r|\n/);
             textInput.value = lines.sort().join('\n');
             updateCounts();
+            hideAllOutputAreas();
         }
 
         function sortLinesReverseAlphabetical() {
@@ -686,18 +757,21 @@
             const lines = textInput.value.split(/\r\n|\r|\n/);
             textInput.value = lines.sort().reverse().join('\n');
             updateCounts();
+            hideAllOutputAreas();
         }
 
         function reverseText() {
             if (!textInput.value) return;
             textInput.value = textInput.value.split('').reverse().join('');
             updateCounts();
+            hideAllOutputAreas();
         }
 
         function showCharacterFrequency() {
+            hideAllOutputAreas(); // Hide other outputs
             if (!textInput.value) {
-                textOutput.value = 'Enter text to analyze character frequency.';
-                outputSection.style.display = 'block';
+                charFreqOutput.value = 'Enter text to analyze character frequency.';
+                charFreqOutputArea.style.display = 'block';
                 return;
             }
             const charFreq = {};
@@ -709,14 +783,15 @@
             for (const [char, count] of sortedFreq) {
                 output += `"${char}": ${count}\n`;
             }
-            textOutput.value = output;
-            outputSection.style.display = 'block';
+            charFreqOutput.value = output;
+            charFreqOutputArea.style.display = 'block';
         }
 
         function showWordFrequency() {
+            hideAllOutputAreas(); // Hide other outputs
             if (!textInput.value) {
-                textOutput.value = 'Enter text to analyze word frequency.';
-                outputSection.style.display = 'block';
+                wordFreqOutput.value = 'Enter text to analyze word frequency.';
+                wordFreqOutputArea.style.display = 'block';
                 return;
             }
             const words = textInput.value.toLowerCase().match(/\b\w+\b/g) || [];
@@ -729,8 +804,8 @@
             for (const [word, count] of sortedFreq) {
                 output += `"${word}": ${count}\n`;
             }
-            textOutput.value = output;
-            outputSection.style.display = 'block';
+            wordFreqOutput.value = output;
+            wordFreqOutputArea.style.display = 'block';
         }
 
         function removeDuplicateLines() {
@@ -739,22 +814,24 @@
             const uniqueLines = Array.from(new Set(lines.map(line => line.trim()))).filter(line => line !== ''); // Trim and filter empty
             textInput.value = uniqueLines.join('\n');
             updateCounts();
+            hideAllOutputAreas();
         }
 
         function handleFindReplace() {
+            hideAllOutputAreas(); // Hide other outputs
             const originalText = textInput.value;
             const find = findTextInput.value;
             const replace = replaceTextInput.value;
             const matchCase = matchCaseCheckbox.checked;
 
             if (!originalText) {
-                textOutput.value = 'Please enter text in the main input area.';
-                outputSection.style.display = 'block';
+                findReplaceOutput.value = 'Please enter text in the main input area.';
+                findReplaceOutputArea.style.display = 'block';
                 return;
             }
             if (!find) {
-                textOutput.value = 'Please enter text to find.';
-                outputSection.style.display = 'block';
+                findReplaceOutput.value = 'Please enter text to find.';
+                findReplaceOutputArea.style.display = 'block';
                 return;
             }
 
@@ -769,24 +846,28 @@
                 const regex = new RegExp(escapedFind, 'gi');
                 replacedText = originalText.replace(regex, replace);
             }
-            textOutput.value = replacedText;
-            outputSection.style.display = 'block';
+            findReplaceOutput.value = replacedText;
+            findReplaceOutputArea.style.display = 'block';
         }
 
         function urlEncode() {
+            hideAllOutputAreas(); // Hide other outputs
             if (!textInput.value) return;
-            textInput.value = encodeURIComponent(textInput.value);
-            updateCounts();
+            encodingOutput.value = encodeURIComponent(textInput.value);
+            encodingOutputArea.style.display = 'block';
+            updateCounts(); // Counts might change if encoded characters are counted differently
         }
 
         function urlDecode() {
+            hideAllOutputAreas(); // Hide other outputs
             if (!textInput.value) return;
             try {
-                textInput.value = decodeURIComponent(textInput.value);
+                encodingOutput.value = decodeURIComponent(textInput.value);
             } catch (e) {
-                textInput.value = "Error: Invalid URL encoding. " + textInput.value;
+                encodingOutput.value = "Error: Invalid URL encoding. " + textInput.value;
             }
-            updateCounts();
+            encodingOutputArea.style.display = 'block';
+            updateCounts(); // Counts might change
         }
 
         // --- Event Listeners ---
@@ -803,8 +884,19 @@
 
             // Action buttons
             clearAllBtn.addEventListener('click', clearAll);
-            copyInputBtn.addEventListener('click', () => copyTextToClipboard(textInput));
-            copyOutputBtn.addEventListener('click', () => copyTextToClipboard(textOutput));
+            copyInputBtn.addEventListener('click', (e) => copyTextToClipboard(textInput, e.target));
+            
+            // Event listeners for new specific copy buttons
+            document.querySelectorAll('.copy-specific-output-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const targetId = e.target.dataset.target;
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        copyTextToClipboard(targetElement, e.target);
+                    }
+                });
+            });
+
 
             // Case Converter buttons
             uppercaseBtn.addEventListener('click', toUpperCase);
