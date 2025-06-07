@@ -6,7 +6,8 @@
     <title>Super Text Tools - Free Online Word Counter, Case Converter, Text Manipulators</title>
     <meta name="description" content="Your comprehensive online toolkit for instant text manipulation, analysis, and transformation. Count words, change case, sort lines, find and replace, and more with our free tools.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <style>
         /* Base styles */
         body {
@@ -38,14 +39,30 @@
             margin-bottom: 2rem;
         }
 
+        /* Specific styles for the logo and title container */
+        .header-logo-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem; /* Space between logo and text */
+            margin-bottom: 1rem; /* Space below logo and title */
+            text-decoration: none; /* Remove underline from link */
+            color: inherit; /* Inherit text color */
+        }
+
+        .header-logo-title-container img {
+            height: 3rem; /* Equivalent to h-12 in Tailwind (12 * 0.25rem = 3rem) */
+            width: auto;
+        }
+
         header h1 {
             font-size: 3rem; /* text-5xl */
             font-weight: 800; /* font-extrabold */
-            margin-bottom: 1rem;
             background-image: linear-gradient(to right, #8b5cf6, #6366f1); /* Purple to Indigo */
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* drop-shadow-lg */
+            margin: 0; /* Override default margin for h1 inside flex container */
         }
 
         header p {
@@ -316,7 +333,9 @@
 <body>
     <div class="container">
         <header>
-            <h1>Super Text Tools</h1>
+            <a href="/" class="header-logo-title-container">
+                <h1>Super Text Tools</h1>
+            </a>
             <p>Your comprehensive online toolkit for instant text manipulation, analysis, and transformation.</p>
         </header>
 
@@ -490,8 +509,8 @@
         const titlecaseBtn = document.getElementById('titlecase-btn');
         const sentencecaseBtn = document.getElementById('sentencecase-btn');
         const alternatingcaseBtn = document.getElementById('alternatingcase-btn');
-        const kebabcaseBtn = document.getElementById('kebabcase-btn');
-        const snakecaseBtn = document.getElementById('snakecase-btn');
+        const kebabcaseBtn = document.getElementById('kebabcase-btn'); 
+        const snakecaseBtn = document.getElementById('snakecase-btn'); 
 
         const removeWhitespaceBtn = document.getElementById('remove-whitespace-btn');
         const sortAzBtn = document.getElementById('sort-az-btn');
